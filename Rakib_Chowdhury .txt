@@ -1,0 +1,81 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Student {
+    String name;
+    int id;
+    ArrayList<String> courses = new ArrayList<>();
+
+    Student(String n, int i) {
+        name = n;
+        id = i;
+    }
+}
+
+public class StudentManagementSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+        int choice;
+        do {
+            System.out.println("Student Management System");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display Student Info");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    addStudent(students, scanner);
+                    break;
+                case 2:
+                    displayStudentInfo(students, scanner);
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        } while (choice != 3);
+    }
+
+    static void addStudent(ArrayList<Student> students, Scanner scanner) {
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter student ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        Student newStudent = new Student(name, id);
+        students.add(newStudent);
+        System.out.println("Student added successfully!");
+    }
+
+    static void displayStudentInfo(ArrayList<Student> students, Scanner scanner) {
+        System.out.print("Enter student ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        boolean found = false;
+        for (Student student : students) {
+            if (student.id == id) {
+                System.out.println("Name: " + student.name);
+                System.out.println("ID: " + student.id);
+                System.out.print("Courses: ");
+                for (String course : student.courses) {
+                    System.out.print(course + ", ");
+                }
+                System.out.println();
+                found = true;
+                break; // Exit the loop once the student is found
+            }
+        }
+
+        if (!found) {
+            System.out.println("Student not found.");
+        }
+    }
+}
